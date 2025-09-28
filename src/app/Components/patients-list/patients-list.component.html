@@ -1,0 +1,219 @@
+
+<div class="patient-list-container">
+    <!-- Header -->
+    <div class="header">
+    <h2>Patient Management System</h2>
+    <div class="header-actions">
+        <button class="btn btn-primary" (click)="navigateToAddPatient()">
+        <i class="icon-plus"></i> Add New Patient
+        </button>
+        <button class="btn btn-secondary" (click)="refreshList()">
+        <i class="icon-refresh"></i> Refresh
+        </button>
+    </div>
+    </div>
+
+    <!-- Search and Filter Section -->
+    <div class="search-section">
+    <div class="search-row">
+        <div class="search-group">
+        <label>Search Patient:</label>
+        <input 
+            type="text" 
+            [(ngModel)]="searchTerm" 
+            placeholder="Enter patient name, ID, or father's name..."
+            class="search-input"
+            (input)="onSearch()"
+        >
+        </div>
+        
+        <div class="filter-group">
+        <label>Date Range:</label>
+        <input 
+            type="date" 
+            [(ngModel)]="dateFrom" 
+            class="date-input"
+            (change)="onDateFilter()"
+        >
+        <span>to</span>
+        <input 
+            type="date" 
+            [(ngModel)]="dateTo" 
+            class="date-input"
+            (change)="onDateFilter()"
+        >
+        </div>
+
+        <div class="filter-group">
+        <label>Status:</label>
+        <select [(ngModel)]="statusFilter" (change)="onStatusFilter()" class="select-input">
+            <option value="">All Status</option>
+            <option value="Pending">Pending</option>
+            <option value="In Progress">In&#160;Progress</option>
+            <option value="Completed">Completed</option>
+        </select>
+        </div>
+    </div>
+
+    <div class="stats-row">
+        <div class="stat-card">
+        <span class="stat-number">{{filteredPatients.length}}</span>
+        <span class="stat-label">Total Patients</span>
+        </div>
+        <div class="stat-card">
+        <span class="stat-number">{{getTotalAmount()}}</span>
+        <span class="stat-label">Total Amount</span>
+        </div>
+        <div class="stat-card">
+        <span class="stat-number">{{getPendingCount()}}</span>
+        <span class="stat-label">Pending Reports</span>
+        </div>
+    </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-container">
+    <table class="patients-table">
+        <thead>
+        <tr>
+            <th (click)="sort('date')" class="sortable">
+            Date
+            <i class="sort-icon" [class]="getSortIcon('date')"></i>
+            </th>
+            <th (click)="sort('serialNo')" class="sortable">
+            S.No
+            <i class="sort-icon" [class]="getSortIcon('serialNo')"></i>
+            </th>
+            <th (click)="sort('patientName')" class="sortable">
+            Patient Name / Father Name
+            <i class="sort-icon" [class]="getSortIcon('patientName')"></i>
+            </th>
+            <th (click)="sort('age')" class="sortable">
+            Age/Sex
+            <i class="sort-icon" [class]="getSortIcon('age')"></i>
+            </th>
+            <th>Alt Ref.No / Permanent ID</th>
+            <th>Referred By Lab / Dr</th>
+            <th (click)="sort('receipt')" class="sortable">
+            Receipt
+            <i class="sort-icon" [class]="getSortIcon('receipt')"></i>
+            </th>
+            <th>Urg Rep</th>
+            <th>Chk Print</th>
+            <th (click)="sort('totalAmount')" class="sortable">
+            Total Amt
+            <i class="sort-icon" [class]="getSortIcon('totalAmount')"></i>
+            </th>
+            <th (click)="sort('discount')" class="sortable">
+            Disc
+            <i class="sort-icon" [class]="getSortIcon('discount')"></i>
+            </th>
+            <th (click)="sort('netAmount')" class="sortable">
+            Net Amt
+            <i class="sort-icon" [class]="getSortIcon('netAmount')"></i>
+            </th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let patient of paginatedPatients; let i = index" 
+            [class]="getRowClass(patient)">
+            <td>{{formatDate(patient.date)}}</td>
+            <td>{{patient.serialNo}}</td>
+            <td>
+            <div class="patient-info">
+                <strong>{{patient.patientName}}</strong>
+                <small>{{patient.fatherName}}</small>
+            </div>
+            </td>
+            <td>{{patient.age}}/{{patient.sex}}</td>
+            <td>
+            <div class="ref-info">
+                <div>{{patient.altRefNo || '-'}}</div>
+                <small>{{patient.permanentId || '-'}}</small>
+            </div>
+            </td>
+            <td>
+            <div class="ref-info">
+                <div>{{patient.referredByLab || '-'}}</div>
+                <small>{{patient.referredByDr || '-'}}</small>
+            </div>
+            </td>
+            <td>{{patient.receipt}}</td>
+            <td>
+            <span class="badge" [class]="patient.urgentReport === 'Yes' ? 'badge-urgent' : 'badge-normal'">
+                {{patient.urgentReport}}
+            </span>
+            </td>
+            <td>
+            <span class="badge" [class]="patient.checkPrint === 'Yes' ? 'badge-success' : 'badge-pending'">
+                {{patient.checkPrint}}
+            </span>
+            </td>
+            <td class="amount">₹{{patient.totalAmount}}</td>
+            <td class="amount">₹{{patient.discount}}</td>
+            <td class="amount">₹{{patient.netAmount}}</td>
+            <td>
+            <span class="status-badge" [class]="getStatusClass(patient.status)">
+                {{patient.status}}
+            </span>
+            </td>
+            <td>
+            <div class="action-buttons">
+                <button class="btn-action btn-view" (click)="viewPatient(patient.id)" title="View">
+                <i class="icon-eye"></i>
+                </button>
+                <button class="btn-action btn-edit" (click)="editPatient(patient.id)" title="Edit">
+                <i class="icon-edit"></i>
+                </button>
+                <button class="btn-action btn-print" (click)="printReport(patient.id)" title="Print">
+                <i class="icon-print"></i>
+                </button>
+                <button class="btn-action btn-delete" (click)="deletePatient(patient.id)" title="Delete">
+                <i class="icon-trash"></i>
+                </button>
+            </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- No Data Message -->
+    <div *ngIf="filteredPatients.length === 0" class="no-data">
+        <i class="icon-info"></i>
+        <p>No patients found matching your criteria.</p>
+    </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination-container" *ngIf="filteredPatients.length > 0">
+    <div class="pagination-info">
+        Showing {{startIndex + 1}} to {{endIndex}} of {{filteredPatients.length}} patients
+    </div>
+    <div class="pagination-controls">
+        <select [(ngModel)]="pageSize" (change)="onPageSizeChange()" class="page-size-select">
+        <option value="10">10 per page</option>
+        <option value="25">25 per page</option>
+        <option value="50">50 per page</option>
+        <option value="100">100 per page</option>
+        </select>
+        
+        <button class="btn-page" [disabled]="currentPage === 1" (click)="goToPage(1)">First</button>
+        <button class="btn-page" [disabled]="currentPage === 1" (click)="goToPage(currentPage - 1)">Previous</button>
+        
+        <span class="page-numbers">
+        <button 
+            *ngFor="let page of getVisiblePages()" 
+            class="btn-page"
+            [class.active]="page === currentPage"
+            (click)="goToPage(page)">
+            {{page}}
+        </button>
+        </span>
+        
+        <button class="btn-page" [disabled]="currentPage === totalPages" (click)="goToPage(currentPage + 1)">Next</button>
+        <button class="btn-page" [disabled]="currentPage === totalPages" (click)="goToPage(totalPages)">Last</button>
+    </div>
+    </div>
+</div>

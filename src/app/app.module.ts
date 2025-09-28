@@ -5,11 +5,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 // import { StepperComponent } from './Components/stepper/stepper.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+// import { PatientsListComponent } from './Components/patients-list/patients-list.component';
 // import { AddPatientComponent } from './Components/add-patient/add-patient.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    // PatientsListComponent,
     // StepperComponent,
     // AddPatientComponent
   ],

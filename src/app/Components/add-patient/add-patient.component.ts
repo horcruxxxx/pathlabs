@@ -57,7 +57,7 @@ export class AddPatientComponent {
 
   constructor(private fb: FormBuilder) {
     this.patientForm = this.fb.group({
-      labOperationType: [''],
+      labOperationType: ['',Validators.required],
       date: [new Date().toISOString().split('T')[0]],
       serialNo: [''],
       patientId: [''],
