@@ -1,0 +1,50 @@
+<div class="w-full py-6">
+  <div class="flex items-center justify-between">
+    <ng-container *ngFor="let step of steps; let i = index">
+      <div class="flex flex-col items-center">
+        <!-- Circle -->
+        <div
+          class="flex h-10 w-10 items-center justify-center rounded-full border-2 text-sm font-semibold transition-colors"
+          [ngClass]="{
+            'border-primary bg-primary text-primary-foreground': currentStep >= step.id,
+            'border-muted-foreground bg-background text-muted-foreground': currentStep < step.id
+          }"
+        >
+          <ng-container *ngIf="currentStep > step.id; else notCompleted">
+            <!-- Completed step: show check -->
+            ✓
+          </ng-container>
+          <ng-template #notCompleted>
+            {{ step.id }}
+          </ng-template>
+        </div>
+
+        <!-- Title + Description -->
+        <div class="mt-2 text-center">
+          <p
+            class="text-sm font-medium"
+            [ngClass]="{
+              'text-foreground': currentStep >= step.id,
+              'text-muted-foreground': currentStep < step.id
+            }"
+          >
+            {{ step.title }}
+          </p>
+          <p *ngIf="step.description" class="text-xs text-muted-foreground mt-1">
+            {{ step.description }}
+          </p>
+        </div>
+      </div>
+
+      <!-- Line between steps -->
+      <div
+        *ngIf="i !== steps.length - 1"
+        class="flex-1 h-0.5 mx-4 transition-colors"
+        [ngClass]="{
+          'bg-primary': currentStep > step.id,
+          'bg-muted': currentStep <= step.id
+        }"
+      ></div>
+    </ng-container>
+  </div>
+</div>

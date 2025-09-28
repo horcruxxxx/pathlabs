@@ -1,0 +1,60 @@
+<!-- <app-stepper></app-stepper> -->
+ <div class="container mx-auto p-6">
+  <h1 class="text-3xl font-bold">New Patient Registration</h1>
+  <p class="text-gray-500">Enter patient details for lab operation</p>
+
+  <!-- Stepper -->
+  <app-stepper [steps]="steps" [currentStep]="currentStep"></app-stepper>
+
+  <form [formGroup]="patientForm" (ngSubmit)="handleSubmit()" class="space-y-6">
+    <!-- Step 1 -->
+    <div *ngIf="currentStep === 1">
+      <h2 class="text-xl font-semibold">Basic Info</h2>
+      <input formControlName="labOperationType" placeholder="Lab Operation Type" />
+      <input type="date" formControlName="date" />
+      <input formControlName="serialNo" placeholder="Serial No." />
+      <input formControlName="patientId" placeholder="Patient ID" />
+    </div>
+
+    <!-- Step 2 -->
+    <div *ngIf="currentStep === 2">
+      <h2 class="text-xl font-semibold">Personal Details</h2>
+      <input formControlName="title" placeholder="Title" />
+      <input formControlName="name" placeholder="Full Name" />
+      <input formControlName="ageYears" placeholder="Age in Years" />
+      <input formControlName="sex" placeholder="Sex" />
+      <textarea formControlName="address" placeholder="Address"></textarea>
+    </div>
+
+    <!-- Step 3 -->
+    <div *ngIf="currentStep === 3">
+      <h2 class="text-xl font-semibold">Test & Lab</h2>
+      <input formControlName="refNo" placeholder="Ref No." />
+      <input formControlName="panelComp" placeholder="Panel Comp." />
+      <input formControlName="refByDoctor" placeholder="Referred by Dr." />
+      <input formControlName="remark" placeholder="Remarks" />
+    </div>
+
+    <!-- Step 4 -->
+    <div *ngIf="currentStep === 4">
+      <h2 class="text-xl font-semibold">Payment</h2>
+      <input formControlName="paymentMode" placeholder="Payment Mode" />
+      <input formControlName="area" placeholder="Area" />
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex justify-between">
+      <button type="button" (click)="handlePrevious()" [disabled]="currentStep === 1">
+        Previous
+      </button>
+
+      <button type="button" (click)="handleNext()" *ngIf="currentStep < 4">
+        Next
+      </button>
+
+      <button type="submit" *ngIf="currentStep === 4">
+        Register Patient
+      </button>
+    </div>
+  </form>
+</div>
