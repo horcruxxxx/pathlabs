@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { StepperComponent } from '../stepper/stepper.component';
 
 interface PatientData {
-  labOperationType: string;
+  // labOperationType: string;
   date: string;
   serialNo: string;
   patientId: string;
@@ -57,7 +57,7 @@ export class AddPatientComponent {
 
   constructor(private fb: FormBuilder) {
     this.patientForm = this.fb.group({
-      labOperationType: ['',Validators.required],
+      // labOperationType: ['',Validators.required],
       date: [new Date().toISOString().split('T')[0]],
       serialNo: [''],
       patientId: [''],
