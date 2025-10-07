@@ -12,9 +12,9 @@ export interface patientModel {
     patient_Contact:number;
     patient_Email:string;
     patient_Marital_Status:string;
-    altRefNo?: string;
-    permanent_Id?: string;
-    referred_By?: string;
+    // altRefNo?: string;
+    // permanent_Id?: string;
+    // referred_By?: string;
     // receipt: number;
     // urgent_Report: 'Yes' | 'No';
     // check_Print: 'Yes' | 'No';

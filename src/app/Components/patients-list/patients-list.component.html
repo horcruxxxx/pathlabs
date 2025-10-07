@@ -89,9 +89,9 @@
                     S.No
                     <i class="sort-icon" [class]="getSortIcon('serialNo')"></i>
                     </th> -->
-                    <th (click)="sort('patient_Reg_Date')" class="sortable">
-                    Date Of Registration
-                    <i class="sort-icon" [class]="getSortIcon('patient_Reg_Date')"></i>
+                    <th (click)="sort('patient_DOB')" class="sortable">
+                    Date Of Birth
+                    <i class="sort-icon" [class]="getSortIcon('patient_DOB')"></i>
                     </th>
                     <th (click)="sort('patient_Name')" class="sortable">
                     Patient Name / Father Name
@@ -139,15 +139,15 @@
             </td>
             <td>{{patient.patient_Age}}/{{patient.patient_Gender}}</td>
             <td>
-            <div class="ref-info">
+            <!-- <div class="ref-info">
                 <div>{{patient.altRefNo || '-'}}</div>
                 <small>{{patient.permanent_Id || '-'}}</small>
-            </div>
+            </div> -->
             </td>
             <td>
             <div class="ref-info">
                 <!-- <div>{{patient.referredByLab || '-'}}</div> -->
-                <small>{{patient.referred_By || '-'}}</small>
+                <!-- <small>{{patient.referred_By || '-'}}</small> -->
             </div>
             </td>
             <!-- <td>{{patient.receipt}}</td> -->

@@ -25,6 +25,12 @@ export class PatientserviceService {
     return this.httpClient.get<patientModel>(geturl).pipe(
       catchError(this.errorHandler));
   }
+  AddPatient(data:patientModel): Observable<patientModel>
+  {
+    let addurl=this.url+constants.add;
+    return this.httpClient.post<patientModel>(addurl,data).pipe(
+      catchError(this.errorHandler));
+  }
   updatePatientDetails(patient:patientModel): Observable<boolean>
   {
     let updateUrl=this.url+constants.update;

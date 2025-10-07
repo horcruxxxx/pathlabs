@@ -2,9 +2,11 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { gender, maritalStatus, relations, salutation } from '../../constants/enum';
 // import { relations } from 'src/app/constants/constants';
 import { patientModel } from 'src/app/models/patientModel';
 import { PatientserviceService } from 'src/app/service/patient/patient.service';
+import { CommonService } from 'src/app/shared/common.service';
 
 @Component({
   selector: 'app-edit-patient',
@@ -18,25 +20,13 @@ export class EditPatientComponent {
   editPatientForm!:FormGroup;
   patientDetails:patientModel|undefined;
   today: string = new Date().toISOString().split('T')[0];
-  readonly salutation=['Mr.','Miss.','Mrs.'];
-  readonly gender = [
-  { label: 'Male', value: 'Male' },
-  { label: 'Female', value: 'Female' },
-  { label: 'Other', value: 'Other' }
-  ];
-  readonly maritalStatus=[
-    { label: 'Married', value: 'Married' },
-    { label: 'Unmarried', value: 'Unmarried' }
-    ];
-  readonly relations = [
-    { label: 'S/O', value: 'S/O' },
-    { label: 'W/O', value: 'W/O' },
-    { label: 'D/O', value: 'D/O' },
-    { label: 'Other', value: 'Other' }
-  ];
+  salutation=Object.values(salutation);
+  gender=Object.values(gender);
+  maritalStatus=Object.values(maritalStatus);
+  relations=Object.values(relations);
 
   constructor(private _route:Router,private formBuilder:FormBuilder,private route: ActivatedRoute, 
-    private _patientService: PatientserviceService,private toastr:ToastrService)
+    private _patientService: PatientserviceService,private toastr:ToastrService,private _common:CommonService)
   {
     this.editPatientForm =  this.formBuilder.group({
       patient_Salution:["",Validators.required],
@@ -88,23 +78,11 @@ export class EditPatientComponent {
       }
       });
     }
-    CalculateAge():void
+    CalculateAge()
     {
-      const dob = this.editPatientForm.get('patient_Dob')?.value;
-     
-      if (dob) {
-      const birthDate = new Date(dob);
-      const today = new Date();
-      let age = today.getFullYear() - birthDate.getFullYear();
-      const m = today.getMonth() - birthDate.getMonth();
-      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
-      }
-      else{
-        age--;
-      }
-      this.editPatientForm.get('patient_Age')?.setValue(age);
-      }
+      this._common.CalculateAge(this.editPatientForm.get('patient_DOB')?.value).subscribe(age => {
+        this.editPatientForm.get('patient_Age')?.setValue(age);
+      });
     }
     SubmitForm(form: FormGroup):void {
       if (this.editPatientForm.valid) {
@@ -121,10 +99,8 @@ export class EditPatientComponent {
                  this.toastr.success('Patient Data Updated Successfully', 'Success');
                  this.loadPatient(this.param);
                  this._route.navigate(['patients-list']);
-                //  this.clearForm();
             }
-          },
-          // () => console.log("User add method executed successfully")
+          }
         );
      }
     }

@@ -12,34 +12,59 @@
       <h2 class="text-xl font-semibold">Basic Info</h2>
       <!-- <input class = "formControl" formControlName="labOperationType" placeholder="Lab Operation Type" /> -->
       <input class = "formControl" type="date" formControlName="date" />
-      <input class = "formControl" formControlName="serialNo" placeholder="Serial No." />
+      <!-- <input class = "formControl" formControlName="serialNo" placeholder="Serial No." /> -->
       <input class = "formControl" formControlName="patientId" placeholder="Patient ID" />
     </div>
 
     <!-- Step 2 -->
     <div *ngIf="currentStep === 2">
       <h2 class="text-xl font-semibold">Personal Details</h2>
-      <input class = "formControl" class = "formControl" formControlName="title" placeholder="Title" />
-      <input class = "formControl" formControlName="name" placeholder="Full Name" />
-      <input class = "formControl" formControlName="ageYears" placeholder="Age in Years" />
-      <input class = "formControl" formControlName="sex" placeholder="Sex" />
-      <textarea formControlName="address" placeholder="Address"></textarea>
+      <select formControlName="patient_Salution" class="form-control saluation" placeholder="patient_Salution">
+        <option *ngFor="let entry of salutation" [value]="entry">
+                {{ entry}}
+            </option>
+        </select>
+      <input class = "formControl" formControlName="patient_Name" placeholder="Full Name" />
+      <input type="date" class="form-control" formControlName="patient_DOB" [max]="today" (change)="CalculateAge()">
+      <input type="number" class="form-control" formControlName="patient_Age" placeholder="Age in years" >
+      <select formControlName="patient_Gender" class="form-control" placeholder="Patient Gender">
+        <option *ngFor="let entry of gender" [value]="entry">
+                {{ entry}}
+          </option>
+      </select>
+      <select formControlName="patient_Marital_Status" class="form-control" placeholder="Patient Marital Status">
+        <option *ngFor="let entry of maritalStatus" [value]="entry">
+            {{ entry}}
+        </option>
+        </select>
+        <select formControlName="relation" class="form-control">
+          <option *ngFor="let relation of relations " [value]="relation">
+              {{ relation}}
+          </option>
+        </select> 
+        <input type="text" class="form-control" formControlName="relative_Name" placeholder="Relative Name"
+                 autocorrect="off"
+                    spellcheck="false">
+        <!-- <label class="radio" *ngFor="let status of maritalStatus" >
+            <input type="radio" formControlName="patient_Marital_Status" [value]="status"/> {{status}}
+        </label> -->
+      <textarea formControlName="patient_Address" placeholder="Address"></textarea>
     </div>
 
     <!-- Step 3 -->
     <div *ngIf="currentStep === 3">
       <h2 class="text-xl font-semibold">Test & Lab</h2>
-      <input class = "formControl" formControlName="refNo" placeholder="Ref No." />
+      <!-- <input class = "formControl" formControlName="refNo" placeholder="Ref No." />
       <input class = "formControl" formControlName="panelComp" placeholder="Panel Comp." />
       <input class = "formControl" formControlName="refByDoctor" placeholder="Referred by Dr." />
-      <input class = "formControl" formControlName="remark" placeholder="Remarks" />
+      <input class = "formControl" formControlName="remark" placeholder="Remarks" /> -->
     </div>
 
     <!-- Step 4 -->
     <div *ngIf="currentStep === 4">
       <h2 class="text-xl font-semibold">Payment</h2>
-      <input class = "formControl" formControlName="paymentMode" placeholder="Payment Mode" />
-      <input class = "formControl" formControlName="area" placeholder="Area" />
+      <!-- <input class = "formControl" formControlName="paymentMode" placeholder="Payment Mode" /> -->
+      <!-- <input class = "formControl" formControlName="area" placeholder="Area" /> -->
     </div>
 
     <!-- Buttons -->

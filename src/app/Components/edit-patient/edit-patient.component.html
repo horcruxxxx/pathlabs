@@ -30,7 +30,6 @@
             </div>
             <div class="col-md-2">
             <input type="text" class="form-control name" formControlName="patient_Name">
-            
           </div>
           <p *ngIf="editPatientForm.controls['patient_Salution']?.errors?.['required'] &&
                    editPatientForm.controls['patient_Salution'].touched" class="alert alert-danger">
@@ -61,9 +60,6 @@
           <p *ngIf="editPatientForm.controls['patient_Dob'].errors?.['required'] &&
                   editPatientForm.controls['patient_Dob'].touched" class="alert alert-danger">
                   Patient Date Of Birth is required!</p>
-          <!-- <p *ngIf="editPatientForm.controls['patient_DOB'].errors?.['email'] &&
-                  editPatientForm.controls['patient_DOB'].touched" class="alert alert-danger">
-                  This email is not in proper format!</p> -->
         </div>
       </div>
       <div class="form-group row col-md-6">
@@ -84,8 +80,8 @@
         <label class="col-md-4">Patient Gender</label>
         <div class="col-md-8">
           <label class="radio" *ngFor="let entry of gender" >
-                <input type="radio" formControlName="patient_Gender" [value]="entry.value"/> {{entry.label}}
-            </label>
+            <input type="radio" formControlName="patient_Gender" [value]="entry"/> {{entry}}
+          </label>
             <p *ngIf="editPatientForm.controls['patient_Gender'].errors?.['required'] &&
                   editPatientForm.controls['patient_Gender'].touched" class="alert alert-danger">
                   Patient Gender is required!</p>
@@ -95,7 +91,7 @@
         <label class="col-md-4">Patient Marital Status</label>
         <div class="col-md-8">
             <label class="radio" *ngFor="let status of maritalStatus" >
-                <input type="radio" formControlName="patient_Marital_Status" [value]="status.value"/> {{status.label}}
+                <input type="radio" formControlName="patient_Marital_Status" [value]="status"/> {{status}}
             </label>
             <p *ngIf="editPatientForm.controls['patient_Marital_Status'].errors?.['required'] &&
                   editPatientForm.controls['patient_Marital_Status'].touched" class="alert alert-danger">
@@ -108,8 +104,8 @@
          <label class="col-sm-4">Relation</label>
           <div class="col-md-8">
             <select formControlName="relation" class="form-control">
-                <option *ngFor="let relation of relations " [value]="relation.value">
-                    {{ relation.label}}
+                <option *ngFor="let relation of relations " [value]="relation">
+                    {{ relation}}
                 </option>
             </select> 
             <p *ngIf="editPatientForm.controls['relation']?.errors?.['required'] &&
