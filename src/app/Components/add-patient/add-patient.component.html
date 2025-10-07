@@ -8,13 +8,13 @@
 
   <form [formGroup]="patientForm" (ngSubmit)="handleSubmit()" class="space-y-6">
     <!-- Step 1 -->
-    <div *ngIf="currentStep === 1">
-      <h2 class="text-xl font-semibold">Basic Info</h2>
+    <!-- <div *ngIf="currentStep === 1"> -->
+      <!-- <h2 class="text-xl font-semibold">Basic Info</h2> -->
       <!-- <input class = "formControl" formControlName="labOperationType" placeholder="Lab Operation Type" /> -->
-      <input class = "formControl" type="date" formControlName="date" />
+      <!-- <input class = "formControl" type="date" formControlName="date" /> -->
       <!-- <input class = "formControl" formControlName="serialNo" placeholder="Serial No." /> -->
-      <input class = "formControl" formControlName="patientId" placeholder="Patient ID" />
-    </div>
+      <!-- <input class = "formControl" formControlName="patientId" placeholder="Patient ID" /> -->
+    <!-- </div> -->
 
     <!-- Step 2 -->
     <div *ngIf="currentStep === 2">
@@ -24,9 +24,9 @@
                 {{ entry}}
             </option>
         </select>
-      <input class = "formControl" formControlName="patient_Name" placeholder="Full Name" />
+      <input class = "formControl name" formControlName="patient_Name" placeholder="Full Name" />
       <input type="date" class="form-control" formControlName="patient_DOB" [max]="today" (change)="CalculateAge()">
-      <input type="number" class="form-control" formControlName="patient_Age" placeholder="Age in years" >
+      <input type="number" class="form-control Age" formControlName="patient_Age" placeholder="Age in years" >
       <select formControlName="patient_Gender" class="form-control" placeholder="Patient Gender">
         <option *ngFor="let entry of gender" [value]="entry">
                 {{ entry}}

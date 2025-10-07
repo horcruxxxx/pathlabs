@@ -50,7 +50,7 @@ interface PatientData {
   styleUrls: ['./add-patient.component.scss']
 })
 export class AddPatientComponent {
-    currentStep = 1;
+    currentStep = 2;
 
     today: string = new Date().toISOString().split('T')[0];
     salutation=Object.values(salutation);
@@ -59,7 +59,7 @@ export class AddPatientComponent {
     relations=Object.values(relations);
     
   steps = [
-    { id: 1, title: 'Basic Info', description: 'Patient identification' },
+    // { id: 1, title: 'Basic Info', description: 'Patient identification' },
     { id: 2, title: 'Personal Details', description: 'Contact & demographics' },
     { id: 3, title: 'Test & Lab', description: 'Medical information' },
     { id: 4, title: 'Payment', description: 'Billing details' }

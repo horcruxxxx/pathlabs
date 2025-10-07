@@ -30,7 +30,19 @@ h2 {
 .formControl {
   margin: 1% 0%;
 }
+.saluation{
+  width: 4.5em;
+}
+.name{
+  width: 18em;
+}
 
+input[type='Date']{
+  Width: 15em;
+}
+.Age{
+  Width: 15em;
+}
 input,
 textarea,
 select {
@@ -48,6 +60,10 @@ select {
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
     background: #fff;
   }
+}
+
+select{
+  width: 15em;
 }
 
 textarea {
