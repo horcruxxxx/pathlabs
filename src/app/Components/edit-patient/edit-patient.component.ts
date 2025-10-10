@@ -80,9 +80,10 @@ export class EditPatientComponent {
     }
     CalculateAge()
     {
-      this._common.CalculateAge(this.editPatientForm.get('patient_DOB')?.value).subscribe(age => {
+      console.log(this.editPatientForm.get('patient_Dob')?.value);
+        let age=this._common.CalculateAge(this.editPatientForm.get('patient_Dob')?.value);
+        console.log(age);
         this.editPatientForm.get('patient_Age')?.setValue(age);
-      });
     }
     SubmitForm(form: FormGroup):void {
       if (this.editPatientForm.valid) {

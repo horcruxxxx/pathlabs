@@ -117,11 +117,17 @@ export class AddPatientComponent {
     }
   }
   CalculateAge(){
-    this._common.CalculateAge(this.patientForm.get('patient_DOB')?.value).subscribe(age => {
-        this.patientForm.get('patient_Age')?.setValue(age);
-      });
+    
+    // this._common.CalculateAge(this.patientForm.get('patient_DOB')?.value).subscribe(age => {
+    //     this.patientForm.get('patient_Age')?.setValue(age);
+    //   });
+    let age =this._common.CalculateAge(this.patientForm.get('patient_DOB')?.value);
+    console.log(age);
+    this.patientForm.get('patient_Age')?.setValue(age);
+
   }
   handleSubmit() {
+    console.log(this.patientForm.get('patient_Age')?.value);
     if (this.patientForm.valid) {
       const data = this.patientForm.value as patientModel;
       console.log(data);

@@ -7,13 +7,16 @@ h3 {
     font-size: 1.5em;
     font-weight: 500;
 }
+
 label{
+  text-align: right;
+  // width: 9em;
     font-size: 1em;
     font-weight: 500;
     margin-top:0.8em ;
 }
 input[type="radio"]{
-  margin-right: 0.25em;
+  margin-right: 0.5em;
   vertical-align: middle;
   margin-left: 0.5em;
 }

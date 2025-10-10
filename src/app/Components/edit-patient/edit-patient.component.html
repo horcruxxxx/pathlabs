@@ -19,7 +19,7 @@
     <form [formGroup]="editPatientForm" (ngSubmit)="SubmitForm(editPatientForm)">
     <div class=" row col-md-12 pt-4">
         <div class="form-group row col-md-6">
-         <label class="col-sm-4">Patient Name</label>
+         <label class="col-sm-4"> Name</label>
          <!-- <div class="col"> -->
           <div class="col-md-2">
             <select formControlName="patient_Salution" class="form-control saluation ">
@@ -40,7 +40,7 @@
         <!-- </div> -->
         </div>
         <div class="form-group row col-md-6">
-          <label class="col-md-4">Patient Address</label>
+          <label class="col-md-4"> Address</label>
             <div class="col-md-8">
                 <!-- <input type="text" class="form-control" formControlName="path_Address" autocomplete="off" -->
                 <input type="text" class="form-control" formControlName="patient_Address"
@@ -54,7 +54,7 @@
     </div>
     <div class="row col-md-12 pt-4">
       <div class="form-group row col-md-6">
-        <label class="col-md-4">Patient Date Of Birth</label>
+        <label class="col-md-4"> Date Of Birth</label>
         <div class="col-md-8">
           <input type="date" class="form-control" formControlName="patient_Dob" [max]="today"(change)="CalculateAge()">
           <p *ngIf="editPatientForm.controls['patient_Dob'].errors?.['required'] &&
@@ -63,9 +63,9 @@
         </div>
       </div>
       <div class="form-group row col-md-6">
-        <label class="col-md-4">Patient Age</label>
+        <label class="col-md-4"> Age</label>
         <div class="col-md-8">
-          <input type="number" class="form-control" formControlName="patient_Age">
+          <input type="text" class="form-control" formControlName="patient_Age">
           <p *ngIf="editPatientForm.controls['patient_Age'].errors?.['required'] &&
                   editPatientForm.controls['patient_Age'].touched" class="alert alert-danger">
                   Patient Age is required!</p>
@@ -77,7 +77,7 @@
     </div>
     <div class="row col-md-12 pt-4">
       <div class="form-group row col-md-6">
-        <label class="col-md-4">Patient Gender</label>
+        <label class="col-md-4"> Gender</label>
         <div class="col-md-8">
           <label class="radio" *ngFor="let entry of gender" >
             <input type="radio" formControlName="patient_Gender" [value]="entry"/> {{entry}}
@@ -88,7 +88,7 @@
         </div>
       </div>
       <div class="form-group row col-md-6">
-        <label class="col-md-4">Patient Marital Status</label>
+        <label class="col-md-4"> Marital Status</label>
         <div class="col-md-8">
             <label class="radio" *ngFor="let status of maritalStatus" >
                 <input type="radio" formControlName="patient_Marital_Status" [value]="status"/> {{status}}
@@ -129,7 +129,7 @@
     
     <div class="row col-md-12 pt-4">
         <div class="form-group row col-md-6">
-        <label class="col-md-4">Patient Contact</label>
+        <label class="col-md-4"> Contact</label>
         <div class="col-md-8">
           <input type="number" class="form-control" formControlName="patient_Contact">
             <p *ngIf="editPatientForm.controls['patient_Contact']?.errors?.['required'] &&
@@ -141,7 +141,7 @@
         </div>
       </div>
       <div class="form-group row col-md-6">
-        <label class="col-md-4">Patient EmailID</label>
+        <label class="col-md-4"> EmailID</label>
         <div class="col-md-8">
           <input type="text" class="form-control" formControlName="patient_Email" >
           <p *ngIf="editPatientForm.controls['patient_Email'].errors?.['email'] &&
