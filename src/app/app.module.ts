@@ -7,11 +7,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // import { StepperComponent } from 'components/stepper/stepper.component';
 // import { } from './components/stepper/stepper.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { PatientsListComponent } from './components/patients-list/patients-list.component';
-import { AddPatientComponent } from './components/add-patient/add-patient.component';
 import { HttpClientModule } from '@angular/common/http';
-import { EditPatientComponent } from './components/edit-patient/edit-patient.component';
+import { EditPatientComponent } from './Components/edit-patient/edit-patient.component';
 import { ToastrModule } from 'ngx-toastr';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -23,6 +22,7 @@ import { ToastrModule } from 'ngx-toastr';
   ],
   imports: [
     NgbModule,
+    RouterModule,
     ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
