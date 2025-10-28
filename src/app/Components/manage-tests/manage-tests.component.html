@@ -1,0 +1,164 @@
+<div class="master-list-wrap">
+  <header class="header">
+    <h1>Master Test List</h1>
+    <p class="subtitle">Manage groups, subgroups, and test rates</p>
+  </header>
+
+  <div class="search-row">
+    <input type="text" placeholder="Search groups, subgroups, or tests..." [(ngModel)]="query" />
+  </div>
+
+  <div class="columns">
+    <!-- Groups Column -->
+    <div class="card column">
+      <div class="card-header">
+        <span>Groups</span><small>Rs.</small>
+      </div>
+      <div class="list">
+        <ng-container *ngIf="filteredGroups.length > 0; else noGroups">
+          <div *ngFor="let g of filteredGroups"
+               (click)="selectGroup(g)"
+               [class.active]="g.id === selectedGroupId"
+               class="list-item">
+            <div class="left">
+              <div class="code">{{g.code}}</div>
+              <div class="name">{{g.name}}</div>
+            </div>
+            <div class="right">{{g.count}}</div>
+          </div>
+        </ng-container>
+        <ng-template #noGroups>
+          <div class="empty-state">
+            <div class="empty-title">No data available</div>
+            <div class="empty-sub">No groups to display.</div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+
+    <!-- SubGroups Column -->
+    <div class="card column">
+      <div class="card-header">
+        <span>SubGroups</span><small>Rs.</small>
+      </div>
+      <div class="list">
+        <ng-container *ngIf="filteredSubGroups.length > 0; else noSubGroups">
+          <div *ngFor="let s of filteredSubGroups"
+               (click)="selectSubGroup(s)"
+               [class.active]="s.id === selectedSubGroupId"
+               class="list-item">
+            <div class="left">
+              <div class="code">{{s.code}}</div>
+              <div class="name">{{s.name}}</div>
+            </div>
+            <div class="right">{{s.count}}</div>
+          </div>
+        </ng-container>
+        <ng-template #noSubGroups>
+          <div class="empty-state">
+            <div class="empty-title">No data available</div>
+            <div class="empty-sub">No subgroups for the selected group.</div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+
+    <!-- Tests Column -->
+    <div class="card column">
+      <div class="card-header">
+        <span>Tests</span><small>Rs.</small>
+      </div>
+      <div class="list">
+        <ng-container *ngIf="filteredTests.length > 0; else noTests">
+          <div *ngFor="let t of filteredTests"
+               (click)="toggleTestSelection(t)"
+               [class.selected]="selectedTestIds.has(t.id)"
+               [class.focused]="focusedTestId === t.id"
+               class="list-item test-item">
+            <div class="icon-wrap">
+              <div class="icon" [class.selected]="selectedTestIds.has(t.id)" [attr.title]="selectedTestIds.has(t.id) ? 'Selected' : 'Not selected'">
+                <!-- Check or Cross -->
+                <svg *ngIf="selectedTestIds.has(t.id)" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="12" cy="12" r="11" stroke="#2fbb6a" stroke-width="2" fill="hsl(200 95% 40%)"/>
+                  <path d="M7.5 12.5L10.5 15.5L16.5 9.5" stroke="#2fbb6a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <svg *ngIf="!selectedTestIds.has(t.id)" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="12" cy="12" r="11" stroke="#9aaaba" stroke-width="2" fill="#f6fbfb"/>
+                  <path d="M15 9L9 15M9 9L15 15" stroke="#9aaaba" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+             
+            <div class="left">
+              <div class="code">{{t.code}}</div>
+              <div class="name">{{t.name}}</div>
+            </div>
+            <div class="right price">₹{{t.price}}</div>
+          </div>
+        </ng-container>
+        <ng-template #noTests>
+          <div class="empty-state">
+            <div class="empty-title">No data available</div>
+            <div class="empty-sub">No tests for the selected subgroup.</div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+
+    <!-- Selected Tests Column (new) -->
+    <div class="card selected-column">
+      <div class="card-header">
+        <span>Selected Tests</span>
+        <div class="total-top">
+          <div class="total-label">Total Amount</div>
+          <div class="total-amount">₹{{ totalAmount }}</div>
+        </div>
+      </div>
+
+      <div class="list selected-list">
+        <ng-container *ngIf="selectedTests.length > 0; else noSelection">
+          <div *ngFor="let s of selectedTests; let i = index" class="selected-item">
+            <div class="left">
+              <div class="meta">#{{i+1}}</div>
+              <div class="code">{{s.code}}</div>
+              <div class="name">{{s.name}}</div>
+            </div>
+            <div class="right">
+              <div class="price">₹{{s.price}}</div>
+              <button class="remove" (click)="removeSelected(s.id)" title="Remove">✕</button>
+            </div>
+          </div>
+
+          <div class="total-summary">
+            <div class="summary-left">Total ({{selectedTests.length}} tests)</div>
+            <div class="summary-right">₹{{ totalAmount }}</div>
+          </div>
+        </ng-container>
+
+        <ng-template #noSelection>
+          <div class="empty-state">
+            <div class="empty-title">No data available</div>
+            <div class="empty-sub">No tests selected.</div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+
+  <div class="action-bar">
+    <button class="btn primary" (click)="add()">+ Add</button>
+    <button class="btn" (click)="edit()">Edit</button>
+    <button class="btn" (click)="copy()">Copy</button>
+    <button class="btn danger" (click)="drop()">Drop</button>
+    <button class="btn" (click)="selectAll()">Select</button>
+    <button class="btn" (click)="find()">Find</button>
+    <button class="btn" (click)="rates()">% Rates %</button>
+    <button class="btn" (click)="close()">Close</button>
+  </div>
+
+  <!-- toast / acknowledgement -->
+  <div class="toast" *ngIf="toastVisible">
+    <div class="toast-title">Test added</div>
+    <div class="toast-body">{{ toastMessage }}</div>
+  </div>
+</div>

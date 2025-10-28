@@ -20,16 +20,16 @@ interface Step {
 export class StepperComponent implements OnInit{
 
   @Input() steps: Step[] = [];
-  @Input() currentStep: number = 1;
+  @Input() currentStep: number = 2;
 
   firstFormGroup: FormGroup = new FormGroup({});
   secondFormGroup: FormGroup = new FormGroup({});
   thirdFormGroup: FormGroup = new FormGroup({});
 
   ngOnInit(): void {
-    this.firstFormGroup = new FormGroup({
-      firstCtrl: new FormControl('',Validators.required),
-    }),
+    // this.firstFormGroup = new FormGroup({
+    //   firstCtrl: new FormControl('',Validators.required),
+    // }),
     this.secondFormGroup = new FormGroup({
       secondCtrl: new FormControl('',Validators.required),
     })

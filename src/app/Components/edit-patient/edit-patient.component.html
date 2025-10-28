@@ -1,0 +1,159 @@
+<div class="patient-list-container">
+    <!-- Header -->
+    <div class="header">
+        <h2>Patient Management System</h2>
+    </div>
+</div>
+    <div>
+        <!-- <h3>{{componentTitle}}</h3> -->
+    
+        <div class="header-actions">
+             <h3>{{componentTitle}}</h3>
+            <button  class="btn btn-tertiary addBtn ms-auto" (click)="clickBack()">
+                <i class="icon-back"></i>Back
+            </button>
+        
+        </div>
+    </div>
+  <div class="table-container patients-table">
+    <form [formGroup]="editPatientForm" (ngSubmit)="SubmitForm(editPatientForm)">
+    <div class=" row col-md-12 pt-4">
+        <div class="form-group row col-md-6">
+         <label class="col-sm-4"> Name</label>
+         <!-- <div class="col"> -->
+          <div class="col-md-2">
+            <select formControlName="patient_Salution" class="form-control saluation ">
+            <option *ngFor="let entry of salutation" [value]="entry">
+                    {{ entry}}
+                </option>
+            </select>
+            </div>
+            <div class="col-md-2">
+            <input type="text" class="form-control name" formControlName="patient_Name">
+          </div>
+          <p *ngIf="editPatientForm.controls['patient_Salution']?.errors?.['required'] &&
+                   editPatientForm.controls['patient_Salution'].touched" class="alert alert-danger">
+                   Please select Saluation</p>
+            <p *ngIf="editPatientForm.controls['patient_Name']?.errors?.['required'] &&
+                   editPatientForm.controls['patient_Name'].touched" class="alert alert-danger">
+                   Please enter valid Patient Name </p>
+        <!-- </div> -->
+        </div>
+        <div class="form-group row col-md-6">
+          <label class="col-md-4"> Address</label>
+            <div class="col-md-8">
+                <!-- <input type="text" class="form-control" formControlName="path_Address" autocomplete="off" -->
+                <input type="text" class="form-control" formControlName="patient_Address"
+                 autocorrect="off"
+                    spellcheck="false">
+                    <p *ngIf="editPatientForm.controls['patient_Address']?.errors?.['required'] &&
+                   editPatientForm.controls['patient_Address'].touched" class="alert alert-danger">
+                   Patient Address is required.</p>
+            </div>
+        </div>
+    </div>
+    <div class="row col-md-12 pt-4">
+      <div class="form-group row col-md-6">
+        <label class="col-md-4"> Date Of Birth</label>
+        <div class="col-md-8">
+          <input type="date" class="form-control" formControlName="patient_Dob" [max]="today"(change)="CalculateAge()">
+          <p *ngIf="editPatientForm.controls['patient_Dob'].errors?.['required'] &&
+                  editPatientForm.controls['patient_Dob'].touched" class="alert alert-danger">
+                  Patient Date Of Birth is required!</p>
+        </div>
+      </div>
+      <div class="form-group row col-md-6">
+        <label class="col-md-4"> Age</label>
+        <div class="col-md-8">
+          <input type="text" class="form-control" formControlName="patient_Age">
+          <p *ngIf="editPatientForm.controls['patient_Age'].errors?.['required'] &&
+                  editPatientForm.controls['patient_Age'].touched" class="alert alert-danger">
+                  Patient Age is required!</p>
+                   <!-- <p *ngIf="editPatientForm.controls['patient_Age']?.hasError('pattern') &&
+                  editPatientForm.controls['patient_Age'].touched" class="alert alert-danger">
+                  Please enter a 10-digit phone number.</p>      -->
+        </div>
+      </div>
+    </div>
+    <div class="row col-md-12 pt-4">
+      <div class="form-group row col-md-6">
+        <label class="col-md-4"> Gender</label>
+        <div class="col-md-8">
+          <label class="radio" *ngFor="let entry of gender" >
+            <input type="radio" formControlName="patient_Gender" [value]="entry"/> {{entry}}
+          </label>
+            <p *ngIf="editPatientForm.controls['patient_Gender'].errors?.['required'] &&
+                  editPatientForm.controls['patient_Gender'].touched" class="alert alert-danger">
+                  Patient Gender is required!</p>
+        </div>
+      </div>
+      <div class="form-group row col-md-6">
+        <label class="col-md-4"> Marital Status</label>
+        <div class="col-md-8">
+            <label class="radio" *ngFor="let status of maritalStatus" >
+                <input type="radio" formControlName="patient_Marital_Status" [value]="status"/> {{status}}
+            </label>
+            <p *ngIf="editPatientForm.controls['patient_Marital_Status'].errors?.['required'] &&
+                  editPatientForm.controls['patient_Marital_Status'].touched" class="alert alert-danger">
+                  Patient Marital Status is required!</p>     
+        </div>
+      </div>
+    </div>
+    <div class=" row col-md-12 pt-4">
+        <div class="form-group row col-md-6">
+         <label class="col-sm-4">Relation</label>
+          <div class="col-md-8">
+            <select formControlName="relation" class="form-control">
+                <option *ngFor="let relation of relations " [value]="relation">
+                    {{ relation}}
+                </option>
+            </select> 
+            <p *ngIf="editPatientForm.controls['relation']?.errors?.['required'] &&
+                   editPatientForm.controls['relation'].touched" class="alert alert-danger">
+                   Pathology Relation is required.</p>
+          </div>
+        </div>
+        <div class="form-group row col-md-6">
+          <label class="col-md-4">Relative Name</label>
+            <div class="col-md-8">
+                <!-- <input type="text" class="form-control" formControlName="path_Address" autocomplete="off" -->
+                <input type="text" class="form-control" formControlName="relative_Name"
+                 autocorrect="off"
+                    spellcheck="false">
+                    <p *ngIf="editPatientForm.controls['relative_Name']?.errors?.['required'] &&
+                   editPatientForm.controls['relative_Name'].touched" class="alert alert-danger">
+                   Relative Name is required.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row col-md-12 pt-4">
+        <div class="form-group row col-md-6">
+        <label class="col-md-4"> Contact</label>
+        <div class="col-md-8">
+          <input type="number" class="form-control" formControlName="patient_Contact">
+            <p *ngIf="editPatientForm.controls['patient_Contact']?.errors?.['required'] &&
+                   editPatientForm.controls['patient_Contact'].touched" class="alert alert-danger">
+                   Relative Name is required.</p>
+            <p *ngIf="editPatientForm.controls['patient_Contact']?.hasError('pattern') &&
+            editPatientForm.controls['patient_Contact'].touched" class="alert alert-danger">
+            Please enter a 10-digit phone number.</p>     
+        </div>
+      </div>
+      <div class="form-group row col-md-6">
+        <label class="col-md-4"> EmailID</label>
+        <div class="col-md-8">
+          <input type="text" class="form-control" formControlName="patient_Email" >
+          <p *ngIf="editPatientForm.controls['patient_Email'].errors?.['email'] &&
+                  editPatientForm.controls['patient_Email'].touched" class="alert alert-danger">
+                  This email is not in proper format!</p>
+        </div>
+      </div>
+      
+    </div>
+    <div class="pt-4 text-center">
+      <button type="submit" class="btn btn-primary">Update</button>
+      <button class="btn btn-danger cancel-btn" (click)="clearForm()">Cancel</button>
+    </div>
+  </form>
+  </div>

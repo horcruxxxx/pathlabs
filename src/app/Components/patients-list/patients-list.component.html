@@ -7,6 +7,9 @@
         <button class="btn btn-primary" (click)="navigateToAddPatient()">
         <i class="icon-plus"></i> Add New Patient
         </button>
+        <button class="btn btn-primary" (click)="manageTests()">
+        <i class="icon-plus"></i> Manage Tests
+        </button>
         <button class="btn btn-secondary" (click)="refreshList()">
         <i class="icon-refresh"></i> Refresh
         </button>
@@ -73,104 +76,114 @@
 
     <!-- Table -->
     <div class="table-container">
-    <table class="patients-table">
-        <thead>
-        <tr>
-            <th (click)="sort('date')" class="sortable">
-            Date
-            <i class="sort-icon" [class]="getSortIcon('date')"></i>
-            </th>
-            <th (click)="sort('serialNo')" class="sortable">
-            S.No
-            <i class="sort-icon" [class]="getSortIcon('serialNo')"></i>
-            </th>
-            <th (click)="sort('patientName')" class="sortable">
-            Patient Name / Father Name
-            <i class="sort-icon" [class]="getSortIcon('patientName')"></i>
-            </th>
-            <th (click)="sort('age')" class="sortable">
-            Age/Sex
-            <i class="sort-icon" [class]="getSortIcon('age')"></i>
-            </th>
-            <th>Alt Ref.No / Permanent ID</th>
-            <th>Referred By Lab / Dr</th>
-            <th (click)="sort('receipt')" class="sortable">
-            Receipt
-            <i class="sort-icon" [class]="getSortIcon('receipt')"></i>
-            </th>
-            <th>Urg Rep</th>
-            <th>Chk Print</th>
-            <th (click)="sort('totalAmount')" class="sortable">
-            Total Amt
-            <i class="sort-icon" [class]="getSortIcon('totalAmount')"></i>
-            </th>
-            <th (click)="sort('discount')" class="sortable">
-            Disc
-            <i class="sort-icon" [class]="getSortIcon('discount')"></i>
-            </th>
-            <th (click)="sort('netAmount')" class="sortable">
-            Net Amt
-            <i class="sort-icon" [class]="getSortIcon('netAmount')"></i>
-            </th>
-            <th>Status</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
+        <!-- Loading Spinner -->
+        <div *ngIf="isLoading" class="loading-message">
+            Loading patients...
+        </div>
+        <!-- Empty State -->
+        <div *ngIf="!isLoading && filteredPatients.length === 0" class="empty-message">
+            No patients found.
+        </div>
+        <table *ngIf="!isLoading && filteredPatients.length > 0" class="patients-table">
+            <thead>
+                <tr>
+                    
+                    <!-- <th (click)="sort('serialNo')" class="sortable">
+                    S.No
+                    <i class="sort-icon" [class]="getSortIcon('serialNo')"></i>
+                    </th> -->
+                    <th (click)="sort('patient_DOB')" class="sortable">
+                    Date Of Birth
+                    <i class="sort-icon" [class]="getSortIcon('patient_DOB')"></i>
+                    </th>
+                    <th (click)="sort('patient_Name')" class="sortable">
+                    Patient Name / Father Name
+                    <i class="sort-icon" [class]="getSortIcon('patient_Name')"></i>
+                    </th>
+                    <th (click)="sort('patient_Age')" class="sortable">
+                    Age/Sex
+                    <i class="sort-icon" [class]="getSortIcon('patient_Age')"></i>
+                    </th>
+                    <th>Alt Ref.No / Permanent ID</th>
+                    <th>Referred By Lab / Dr</th>
+                    <!-- <th (click)="sort('receipt')" class="sortable">
+                    Receipt
+                    <i class="sort-icon" [class]="getSortIcon('receipt')"></i>
+                    </th>
+                    <th>Urg Rep</th>
+                    <th>Chk Print</th>
+                    <th (click)="sort('total_Amount')" class="sortable">
+                    Total Amt
+                    <i class="sort-icon" [class]="getSortIcon('total_Amount')"></i>
+                    </th>
+                    <th (click)="sort('discount')" class="sortable">
+                    Disc
+                    <i class="sort-icon" [class]="getSortIcon('discount')"></i>
+                    </th>
+                    <th (click)="sort('net_Amount')" class="sortable">
+                    Net Amt
+                    <i class="sort-icon" [class]="getSortIcon('net_Amount')"></i>
+                    </th> -->
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
         <tbody>
         <tr *ngFor="let patient of paginatedPatients; let i = index" 
             [class]="getRowClass(patient)">
-            <td>{{formatDate(patient.date)}}</td>
-            <td>{{patient.serialNo}}</td>
+            <!-- <td>{{patient.serialNo}}</td> -->
+            
+            <td>{{formatDate(patient.patient_DOB)}}</td>
             <td>
             <div class="patient-info">
-                <strong>{{patient.patientName}}</strong>
-                <small>{{patient.fatherName}}</small>
+                <strong>{{patient.patient_Name}}</strong>
+                <small>{{patient.relative_Name}}</small>
             </div>
             </td>
-            <td>{{patient.age}}/{{patient.sex}}</td>
+            <td>{{patient.patient_Age}}/{{patient.patient_Gender}}</td>
             <td>
-            <div class="ref-info">
+            <!-- <div class="ref-info">
                 <div>{{patient.altRefNo || '-'}}</div>
-                <small>{{patient.permanentId || '-'}}</small>
-            </div>
+                <small>{{patient.permanent_Id || '-'}}</small>
+            </div> -->
             </td>
             <td>
             <div class="ref-info">
-                <div>{{patient.referredByLab || '-'}}</div>
-                <small>{{patient.referredByDr || '-'}}</small>
+                <!-- <div>{{patient.referredByLab || '-'}}</div> -->
+                <!-- <small>{{patient.referred_By || '-'}}</small> -->
             </div>
             </td>
-            <td>{{patient.receipt}}</td>
+            <!-- <td>{{patient.receipt}}</td> -->
             <td>
-            <span class="badge" [class]="patient.urgentReport === 'Yes' ? 'badge-urgent' : 'badge-normal'">
-                {{patient.urgentReport}}
-            </span>
+            <!-- <span class="badge" [class]="patient.urgent_Report === 'Yes' ? 'badge-urgent' : 'badge-normal'">
+                {{patient.urgent_Report}}
+            </span> -->
             </td>
             <td>
-            <span class="badge" [class]="patient.checkPrint === 'Yes' ? 'badge-success' : 'badge-pending'">
-                {{patient.checkPrint}}
-            </span>
+            <!-- <span class="badge" [class]="patient.check_Print === 'Yes' ? 'badge-success' : 'badge-pending'">
+                {{patient.check_Print}}
+            </span> -->
             </td>
-            <td class="amount">₹{{patient.totalAmount}}</td>
+            <!-- <td class="amount">₹{{patient.total_Amount}}</td>
             <td class="amount">₹{{patient.discount}}</td>
-            <td class="amount">₹{{patient.netAmount}}</td>
+            <td class="amount">₹{{patient.net_Amount}}</td> -->
             <td>
-            <span class="status-badge" [class]="getStatusClass(patient.status)">
+            <!-- <span class="status-badge" [class]="getStatusClass(patient.status)">
                 {{patient.status}}
-            </span>
+            </span> -->
             </td>
             <td>
             <div class="action-buttons">
-                <button class="btn-action btn-view" (click)="viewPatient(patient.id)" title="View">
+                <button class="btn-action btn-view" (click)="viewPatient(patient.patient_Id)" title="View">
                 <i class="icon-eye"></i>
                 </button>
-                <button class="btn-action btn-edit" (click)="editPatient(patient.id)" title="Edit">
+                <button class="btn-action btn-edit" (click)="editPatient(patient.patient_Id)" title="Edit">
                 <i class="icon-edit"></i>
                 </button>
-                <button class="btn-action btn-print" (click)="printReport(patient.id)" title="Print">
+                <button class="btn-action btn-print" (click)="printReport(patient.patient_Id)" title="Print">
                 <i class="icon-print"></i>
                 </button>
-                <button class="btn-action btn-delete" (click)="deletePatient(patient.id)" title="Delete">
+                <button class="btn-action btn-delete" (click)="deletePatient(patient.patient_Id)" title="Delete">
                 <i class="icon-trash"></i>
                 </button>
             </div>
