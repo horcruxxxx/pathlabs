@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AddPatientComponent } from './components/add-patient/add-patient.component';
 import { PatientsListComponent } from './components/patients-list/patients-list.component';
 import { EditPatientComponent } from './components/edit-patient/edit-patient.component';
+import { ManageTestsComponent } from './Components/manage-tests/manage-tests.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,9 @@ const routes: Routes = [
   },
   {
     path:"edit-patient/:id",component:EditPatientComponent
+  },
+  {
+    path:"manage-test",component:ManageTestsComponent
   }
 ];
 

@@ -277,4 +277,8 @@ export class PatientsListComponent {
     }
   }
 
+  manageTests(){
+    this.router.navigate(['/manage-test']);
+  }
+
 }
