@@ -227,6 +227,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AddEditModalComponent } from '../add-edit-modal/add-edit-modal.component';
 
 interface Group { id: string; code: string; name: string; count: number; }
 interface SubGroup { id: string; groupId: string; code: string; name: string; count: number; }
@@ -238,10 +239,7 @@ interface TestItem { id: string; subgroupId: string; code: string; name: string;
   templateUrl: './manage-tests.component.html',
   styleUrls: ['./manage-tests.component.scss'],
   standalone: true,
-  imports: [FormsModule,CommonModule]
-  // selector: 'app-master-test-list',
-  // templateUrl: './master-test-list.component.html',
-  // styleUrls: ['./master-test-list.component.scss']
+  imports: [FormsModule,CommonModule,AddEditModalComponent]
 })
 export class ManageTestsComponent implements OnInit {
   query = '';
@@ -262,6 +260,8 @@ export class ManageTestsComponent implements OnInit {
   toastVisible = false;
   toastMessage = '';
   private toastTimer: any = null;
+
+  showModal:boolean = false;
 
   constructor(
     private _route:Router
@@ -315,6 +315,14 @@ export class ManageTestsComponent implements OnInit {
     let list = this.tests.filter(t => t.subgroupId === this.selectedSubGroupId);
     if (!q) return list;
     return list.filter(t => `${t.code} ${t.name}`.toLowerCase().includes(q));
+  }
+
+  openModal() {
+    this.showModal = true;
+  }
+
+  handleSubmit(data: any) {
+    console.log("Modal Submitted:", data);
   }
 
   selectGroup(g: Group) {
@@ -371,7 +379,7 @@ export class ManageTestsComponent implements OnInit {
   }
 
   // Note - TObe Done after designs, will discuss with vanchhit
-  add() { console.log('Add'); }
+  add() { this.openModal();console.log('Add'); }
   edit() { console.log('Edit'); }
   copy() { console.log('Copy'); }
   drop() { console.log('Drop'); }

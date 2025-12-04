@@ -1,0 +1,297 @@
+<div class="modal-backdrop" (click)="close()"></div>
+
+<div class="modal-container">
+  <button class="close-icon" (click)="close()">✕</button>
+
+  <!-- Step 0: Selection -->
+  <div *ngIf="step === 0">
+    <h2>Add New Item</h2>
+
+    <p class="subtitle">What would you like to add?</p>
+    <small class="desc">Choose the type of item you want to create</small>
+
+    <div class="options">
+
+      <label class="option" [class.active]="selected === 'group'">
+        <input type="radio" name="itemType" value="group" (change)="selected='group'">
+        <div class="text">
+          <strong>New Group</strong>
+          <span>Create a group with subgroup and test</span>
+        </div>
+      </label>
+
+      <label class="option" [class.active]="selected === 'subgroup'">
+        <input type="radio" name="itemType" value="subgroup" (change)="selected='subgroup'">
+        <div class="text">
+          <strong>New SubGroup</strong>
+          <span>Add subgroup under existing group</span>
+        </div>
+      </label>
+
+      <label class="option" [class.active]="selected === 'test'">
+        <input type="radio" name="itemType" value="test" (change)="selected='test'">
+        <div class="text">
+          <strong>New Test</strong>
+          <span>Add a test under existing subgroup</span>
+        </div>
+      </label>
+
+    </div>
+  </div>
+
+
+
+  <ng-container [ngSwitch]="selected" *ngIf="selected === 'group'">
+    
+    <ng-container *ngSwitchCase="'group'">
+      <!-- Step 1: Group Form -->
+      <div *ngIf="step === 1">
+        
+        <h2>Step 1 of 3: Group</h2>
+    
+        <p class="subtitle">Group Details</p>
+        <small class="desc">Enter the group information</small>
+    
+    
+        <div class="form">
+          <label>Group ID *</label>
+          <input type="text" placeholder="e.g., G01" [(ngModel)]="formData.group.id">
+    
+          <label>Group Name *</label>
+          <input type="text" placeholder="e.g., HAEMATOLOGY" [(ngModel)]="formData.group.name">
+    
+          <label>Rate (₹) *</label>
+          <input 
+            type="number" 
+            placeholder="0" 
+            [(ngModel)]="formData.group.rate"
+            min="0"
+          >
+        </div>
+      </div>
+    
+      <!-- Step 2: Group Form -->
+      <div *ngIf="step === 2">
+        
+        <h2>Step 2 of 3: Group</h2>
+    
+        <p class="subtitle">SubGroup Details</p>
+        <small class="desc">Add a subgroup to your new group</small>
+    
+    
+        <div class="form">
+          <label>SubGroup ID *</label>
+          <input type="text" placeholder="e.g., S01" [(ngModel)]="formData.subGroup.id">
+    
+          <label>SubGroup Name *</label>
+          <input type="text" placeholder="e.g., HAEMATOLOGY PROFILE" [(ngModel)]="formData.subGroup.name">
+    
+          <label>Rate (₹) *</label>
+          <input 
+            type="number" 
+            placeholder="0" 
+            [(ngModel)]="formData.subGroup.rate"
+            min="0"
+          >
+        </div>
+      </div>
+    
+      <!-- Step 2: Group Form -->
+      <div *ngIf="step === 3">
+        
+        <h2>Step 3 of 3: TEST</h2>
+    
+        <p class="subtitle">Test  Details</p>
+        <small class="desc">Add a test to complete the setup</small>
+    
+    
+        <div class="form">
+          <label>Test ID *</label>
+          <input type="text" placeholder="e.g., T01" [(ngModel)]="formData.test.id">
+    
+          <label>Test Name *</label>
+          <input type="text" placeholder="e.g., TLC DLC" [(ngModel)]="formData.test.name">
+    
+          <label>Rate (₹) *</label>
+          <input 
+            type="number" 
+            placeholder="0" 
+            [(ngModel)]="formData.test.rate"
+            min="0"
+          >
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngSwitchCase="'subgroup'">
+      <!-- Step 1: Group Form -->
+      <div *ngIf="step === 1">
+        
+        <h2>Step 1 of 3: Group</h2>
+    
+        <p class="subtitle">Group Details</p>
+        <small class="desc">Enter the group information</small>
+    
+    
+        <div class="form">
+          <label>Group ID *</label>
+          <input type="text" placeholder="e.g., G01" [(ngModel)]="formData.group.id">
+    
+          <label>Group Name *</label>
+          <input type="text" placeholder="e.g., HAEMATOLOGY" [(ngModel)]="formData.group.name">
+    
+          <label>Rate (₹) *</label>
+          <input 
+            type="number" 
+            placeholder="0" 
+            [(ngModel)]="formData.group.rate"
+            min="0"
+          >
+        </div>
+      </div>
+    
+      <!-- Step 2: Group Form -->
+      <div *ngIf="step === 2">
+        
+        <h2>Step 2 of 3: Group</h2>
+    
+        <p class="subtitle">SubGroup Details</p>
+        <small class="desc">Add a subgroup to your new group</small>
+    
+    
+        <div class="form">
+          <label>SubGroup ID *</label>
+          <input type="text" placeholder="e.g., S01" [(ngModel)]="formData.subGroup.id">
+    
+          <label>SubGroup Name *</label>
+          <input type="text" placeholder="e.g., HAEMATOLOGY PROFILE" [(ngModel)]="formData.subGroup.name">
+    
+          <label>Rate (₹) *</label>
+          <input 
+            type="number" 
+            placeholder="0" 
+            [(ngModel)]="formData.subGroup.rate"
+            min="0"
+          >
+        </div>
+      </div>
+    
+      <!-- Step 2: Group Form -->
+      <div *ngIf="step === 3">
+        
+        <h2>Step 3 of 3: TEST</h2>
+    
+        <p class="subtitle">Test  Details</p>
+        <small class="desc">Add a test to complete the setup</small>
+    
+    
+        <div class="form">
+          <label>Test ID *</label>
+          <input type="text" placeholder="e.g., T01" [(ngModel)]="formData.test.id">
+    
+          <label>Test Name *</label>
+          <input type="text" placeholder="e.g., TLC DLC" [(ngModel)]="formData.test.name">
+    
+          <label>Rate (₹) *</label>
+          <input 
+            type="number" 
+            placeholder="0" 
+            [(ngModel)]="formData.test.rate"
+            min="0"
+          >
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngSwitchCase="'test'">
+      <!-- Step 1: Group Form -->
+      <div *ngIf="step === 1">
+        
+        <h2>Step 1 of 3: Group</h2>
+    
+        <p class="subtitle">Group Details</p>
+        <small class="desc">Enter the group information</small>
+    
+    
+        <div class="form">
+          <label>Group ID *</label>
+          <input type="text" placeholder="e.g., G01" [(ngModel)]="formData.group.id">
+    
+          <label>Group Name *</label>
+          <input type="text" placeholder="e.g., HAEMATOLOGY" [(ngModel)]="formData.group.name">
+    
+          <label>Rate (₹) *</label>
+          <input 
+            type="number" 
+            placeholder="0" 
+            [(ngModel)]="formData.group.rate"
+            min="0"
+          >
+        </div>
+      </div>
+    
+      <!-- Step 2: Group Form -->
+      <div *ngIf="step === 2">
+        
+        <h2>Step 2 of 3: Group</h2>
+    
+        <p class="subtitle">SubGroup Details</p>
+        <small class="desc">Add a subgroup to your new group</small>
+    
+    
+        <div class="form">
+          <label>SubGroup ID *</label>
+          <input type="text" placeholder="e.g., S01" [(ngModel)]="formData.subGroup.id">
+    
+          <label>SubGroup Name *</label>
+          <input type="text" placeholder="e.g., HAEMATOLOGY PROFILE" [(ngModel)]="formData.subGroup.name">
+    
+          <label>Rate (₹) *</label>
+          <input 
+            type="number" 
+            placeholder="0" 
+            [(ngModel)]="formData.subGroup.rate"
+            min="0"
+          >
+        </div>
+      </div>
+    
+      <!-- Step 2: Group Form -->
+      <div *ngIf="step === 3">
+        
+        <h2>Step 3 of 3: TEST</h2>
+    
+        <p class="subtitle">Test  Details</p>
+        <small class="desc">Add a test to complete the setup</small>
+    
+    
+        <div class="form">
+          <label>Test ID *</label>
+          <input type="text" placeholder="e.g., T01" [(ngModel)]="formData.test.id">
+    
+          <label>Test Name *</label>
+          <input type="text" placeholder="e.g., TLC DLC" [(ngModel)]="formData.test.name">
+    
+          <label>Rate (₹) *</label>
+          <input 
+            type="number" 
+            placeholder="0" 
+            [(ngModel)]="formData.test.rate"
+            min="0"
+          >
+        </div>
+      </div>
+    </ng-container>
+
+  </ng-container>
+
+  <!-- fotter buttons -->
+  <div class="actions">
+    <button class="cancel-btn" (click)="close()">Cancel</button>
+    <ng-container *ngIf="lastStep; else nextButton">
+      <button class="next-btn" [disabled]="!selected" (click)="next()">Create </button>
+    </ng-container>
+    <ng-template #nextButton>
+      <button class="next-btn" [disabled]="!selected" (click)="next()">Next →</button>
+    </ng-template>
+  </div>
+
+</div>

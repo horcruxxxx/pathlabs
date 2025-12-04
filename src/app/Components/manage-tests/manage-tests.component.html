@@ -146,7 +146,7 @@
   </div>
 
   <div class="action-bar">
-    <button class="btn primary" (click)="add()">+ Add</button>
+    <button class="btn" (click)="add()">+ Add</button>
     <button class="btn" (click)="edit()">Edit</button>
     <button class="btn" (click)="copy()">Copy</button>
     <button class="btn danger" (click)="drop()">Drop</button>
@@ -162,3 +162,8 @@
     <div class="toast-body">{{ toastMessage }}</div>
   </div>
 </div>
+
+<app-add-edit-modal 
+        [(open)]="showModal"
+        mode="add"
+        (submitted)="handleSubmit($event)"/>
